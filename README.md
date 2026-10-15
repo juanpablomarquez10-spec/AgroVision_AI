@@ -1,32 +1,52 @@
-🌱 AgroVision_AI
+🌱 AgroVision IA
 
 Sistema de clasificación de enfermedades en hojas de tomate mediante Deep Learning y visión por computadora.
 
+Proyecto académico individual para la asignatura de Deep Learning.
+
 1. Descripción del proyecto
 
-AgroVision_AI es un proyecto académico individual que utiliza modelos de aprendizaje profundo para clasificar imágenes de hojas de tomate en tres categorías: tizón temprano, tizón tardío y hojas sanas.
+AgroVision IA es una aplicación que utiliza modelos de aprendizaje profundo para clasificar imágenes de hojas de tomate en tres categorías:
 
-Se entrenaron y evaluaron dos modelos: una red neuronal convolucional (CNN) y MobileNetV2 mediante transferencia de aprendizaje.
+Tizón temprano (Early blight).
+
+Tizón tardío (Late blight).
+
+Hoja sana (Healthy).
+
+El proyecto implementa y compara dos enfoques de clasificación: una red neuronal convolucional (CNN) y MobileNetV2 mediante transferencia de aprendizaje.
 
 2. Problema y objetivo
 
-Las enfermedades pueden afectar la productividad de los cultivos de tomate. Este proyecto explora la clasificación automática de imágenes como apoyo a la identificación de síntomas.
+Las enfermedades de las plantas de tomate pueden afectar la productividad de los cultivos. La identificación de síntomas mediante imágenes puede servir como apoyo para reconocer posibles problemas fitosanitarios.
 
-Objetivo general: desarrollar y comparar dos modelos de Deep Learning para clasificar hojas de tomate en tres categorías.
+Objetivo general: desarrollar y evaluar dos modelos de Deep Learning para clasificar imágenes de hojas de tomate y comparar su desempeño.
 
 3. Conjunto de datos
 
-El experimento utilizó 1.495 imágenes distribuidas en tres clases:
+El experimento se realizó con un conjunto de 1.495 imágenes pertenecientes a tres categorías:
 
-Tomato___Early_blight: tizón temprano.
+Categoría
 
-Tomato___Late_blight: tizón tardío.
+Descripción
 
-Tomato___healthy: hojas sanas.
+Tomato___Early_blight
+
+Tizón temprano
+
+Tomato___Late_blight
+
+Tizón tardío
+
+Tomato___healthy
+
+Hoja sana
+
+La distribución utilizada fue la siguiente:
 
 Conjunto
 
-Imágenes
+Número de imágenes
 
 Entrenamiento
 
@@ -44,11 +64,11 @@ Total
 
 1.495
 
-La división se realizó con semilla 42. Las imágenes originales y los conjuntos divididos se conservan localmente y no están incluidos en este repositorio.
+La división se realizó utilizando la semilla aleatoria 42. Las imágenes del conjunto de datos no están incluidas en el repositorio y deben prepararse por separado para volver a entrenar los modelos.
 
 4. Modelos y resultados
 
-Ambos modelos se evaluaron sobre el mismo conjunto de prueba.
+Los dos modelos se evaluaron utilizando el mismo conjunto de prueba.
 
 Modelo
 
@@ -68,77 +88,149 @@ MobileNetV2
 
 0,2107
 
-MobileNetV2 obtuvo una exactitud superior en este experimento. Estos resultados corresponden al conjunto evaluado y no garantizan el mismo rendimiento con imágenes externas.
+En este experimento, MobileNetV2 obtuvo una exactitud superior a la CNN básica por 16,89 puntos porcentuales.
+
+Estos resultados corresponden al conjunto de prueba utilizado. El rendimiento puede variar con imágenes externas que presenten diferentes condiciones de iluminación, fondos, ángulos o síntomas.
 
 5. Estructura del repositorio
 
-descargar_datos.py: descarga o preparación de datos.
+Los principales archivos y carpetas publicados son:
 
-verificar_datos.py: verifica las categorías disponibles.
+Archivo o carpeta
 
-dividir_datos.py: divide los datos en entrenamiento, validación y prueba.
+Descripción
 
-entrenar_modelo.py: entrena la CNN básica.
+descargar_datos.py
 
-entrenar_mobilenet.py: entrena MobileNetV2.
+Descarga o preparación del conjunto de datos.
 
-predecir_imagen.py: realiza predicciones sobre imágenes.
+verificar_datos.py
 
-interfaz_agrovision.py: contiene la interfaz del sistema.
+Verificación de las categorías del conjunto de datos.
 
-generar_comparacion.py: compara los resultados de los modelos.
+dividir_datos.py
 
-generar_evidencias.py: genera archivos de evidencia.
+División de los datos en entrenamiento, validación y prueba.
 
-modelos/: modelos entrenados publicados.
+entrenar_modelo.py
 
-resultados/: métricas y gráficas de la CNN.
+Entrenamiento de la CNN básica.
 
-resultados_mobilenet/: métricas y gráficas de MobileNetV2.
+entrenar_mobilenet.py
 
-evidencias/: informe, comparación y evidencias adicionales.
+Entrenamiento de MobileNetV2.
 
-requirements.txt: dependencias de Python.
+predecir_imagen.py
 
-6. Tecnologías
+Predicción sobre una imagen.
 
-Python
+interfaz_agrovision.py
 
-TensorFlow y Keras
+Interfaz de la aplicación AgroVision IA.
 
-NumPy y pandas
+generar_comparacion.py
 
-scikit-learn
+Comparación de los modelos.
 
-Matplotlib
+generar_evidencias.py
 
-Pillow
+Generación de archivos de evidencia.
 
-GitHub
+requirements.txt
+
+Dependencias de Python.
+
+modelos/
+
+Modelos entrenados publicados.
+
+resultados/
+
+Métricas y gráficas de la CNN.
+
+resultados_mobilenet/
+
+Métricas y gráficas de MobileNetV2.
+
+evidencias/
+
+Informes, comparación y capturas de la aplicación.
+
+6. Tecnologías utilizadas
+
+Python.
+
+TensorFlow y Keras.
+
+NumPy y pandas.
+
+scikit-learn.
+
+Matplotlib.
+
+Pillow.
+
+GitHub para el almacenamiento y la documentación del proyecto.
 
 7. Instalación y ejecución
 
-Se recomienda utilizar una versión de Python compatible con las dependencias declaradas en requirements.txt.
+7.1. Requisitos previos
 
-Crear y activar un entorno virtual:
+Python compatible con las versiones de las dependencias.
+
+Conexión a internet para instalar las dependencias.
+
+Los archivos del repositorio descargados en el equipo.
+
+7.2. Descargar el proyecto
+
+En GitHub, abre el repositorio y selecciona Code → Download ZIP. Descomprime el archivo y abre PowerShell en la carpeta del proyecto.
+
+7.3. Crear y activar un entorno virtual
+
+En Windows PowerShell, ejecuta los siguientes comandos por separado:
 
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-Instalar las dependencias:
+Si PowerShell impide la activación por la política de ejecución, consulta la documentación de Python para Windows antes de modificar la configuración del sistema.
+
+7.4. Instalar las dependencias
 
 python -m pip install -r requirements.txt
 
-Importante: antes de ejecutar los scripts de entrenamiento o predicción, verifica que los datos estén en las rutas esperadas por cada script y que los modelos entrenados se encuentren en modelos/.
+7.5. Ejecutar la aplicación
 
-Los comandos concretos para cada script pueden depender de los argumentos y las rutas definidos en su código.
+La interfaz utiliza el archivo interfaz_agrovision.py. Antes de ejecutarla, verifica que los modelos entrenados estén disponibles en modelos/ y que las rutas definidas en el código coincidan con la estructura del proyecto.
 
-8. Alcance y limitaciones
+Desde la carpeta donde se encuentra el archivo de la interfaz, ejecuta:
 
-Este es un proyecto académico experimental. La clasificación se limita a las tres categorías estudiadas. El modelo puede equivocarse con imágenes externas, condiciones de iluminación diferentes u hojas con síntomas no representados en el conjunto de datos. No sustituye la evaluación de un especialista agrícola.
+python interfaz_agrovision.py
 
-9. Autor
+Si el archivo está dentro de la carpeta src, utiliza:
 
-Juan Pablo Tejada Marquez
+python .\src\interfaz_agrovision.py
+
+La ejecución correcta depende de que las dependencias, los modelos y las rutas requeridas estén configurados adecuadamente.
+
+7.6. Entrenamiento de los modelos
+
+Para volver a entrenar los modelos es necesario disponer de las imágenes del conjunto de datos y verificar las rutas utilizadas por los scripts. No es necesario repetir el entrenamiento para consultar los resultados de los modelos ya entrenados incluidos en el repositorio.
+
+8. Evidencias y reproducibilidad
+
+En la carpeta evidencias/ se encuentran los archivos de comparación, el informe y las capturas de las pruebas de la aplicación.
+
+Los resultados publicados permiten documentar el experimento y comparar los dos modelos. Para reproducir completamente el entrenamiento, es necesario preparar el conjunto de datos y utilizar un entorno compatible con las dependencias.
+
+9. Alcance y limitaciones
+
+AgroVision IA es un proyecto académico experimental que se limita a tres categorías de hojas de tomate. El modelo puede producir predicciones incorrectas, especialmente ante imágenes diferentes de las utilizadas durante el entrenamiento.
+
+El porcentaje de confianza de una predicción no garantiza que el diagnóstico sea correcto. La aplicación no sustituye la evaluación de un especialista agrícola.
+
+10. Autor
+
+Juan Pablo Tejada Márquez
 
 Proyecto académico individual para la asignatura de Deep Learning.
