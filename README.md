@@ -190,10 +190,8 @@ En GitHub, abre el repositorio y selecciona Code → Download ZIP. Descomprime e
 
 En Windows PowerShell, ejecuta los siguientes comandos por separado:
 
-
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-
 
 Si PowerShell impide la activación por la política de ejecución, consulta la documentación de Python para Windows antes de modificar la configuración del sistema.
 
