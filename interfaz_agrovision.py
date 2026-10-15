@@ -6,19 +6,25 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image, ImageTk, UnidentifiedImageError
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Rutas del proyecto
+BASE_DIR = Path(__file__).resolve().parent
 RUTA_MODELO = BASE_DIR / "modelos" / "mobilenetv2_tomate.keras"
+
+# Configuración de las imágenes
 TAMANO_IMAGEN = (180, 180)
 
+# Clases utilizadas durante el entrenamiento
 CLASES = [
     "Tomato___Early_blight",
     "Tomato___Late_blight",
     "Tomato___healthy",
 ]
 
+# Nombres legibles para mostrar los resultados
 NOMBRES = {
-    "Tomato___Early_blight": "Tizon temprano",
-    "Tomato___Late_blight": "Tizon tardio",
+    "Tomato___Early_blight": "Tizón temprano",
+    "Tomato___Late_blight": "Tizón tardío",
     "Tomato___healthy": "Hoja sana",
 }
 
@@ -26,51 +32,61 @@ NOMBRES = {
 class AgroVisionApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("AgroVision AI - Clasificador de hojas de tomate")
+        self.root.title("AgroVision IA - Clasificador de hojas de tomate")
         self.root.geometry("720x700")
         self.root.minsize(600, 600)
 
         self.modelo = None
         self.imagen_tk = None
 
+        # Contenedor principal
         contenedor = ttk.Frame(root, padding=20)
         contenedor.pack(fill="both", expand=True)
 
+        # Título
         ttk.Label(
             contenedor,
-            text="AgroVision AI",
+            text="AgroVision IA",
             font=("Segoe UI", 24, "bold")
         ).pack(pady=(0, 4))
 
         ttk.Label(
             contenedor,
-            text="Clasificacion de enfermedades en hojas de tomate",
+            text="Clasificación de enfermedades en hojas de tomate",
             font=("Segoe UI", 11)
         ).pack(pady=(0, 18))
 
+        # Botón para seleccionar una fotografía
         self.boton = ttk.Button(
             contenedor,
-            text="Seleccionar fotografia",
+            text="Seleccionar fotografía",
             command=self.seleccionar_imagen
         )
         self.boton.pack(pady=6)
 
+        # Área para visualizar la imagen seleccionada
         self.etiqueta_imagen = ttk.Label(
             contenedor,
             text="Selecciona una imagen JPG, JPEG o PNG",
             anchor="center"
         )
-        self.etiqueta_imagen.pack(fill="both", expand=True, pady=12)
+        self.etiqueta_imagen.pack(
+            fill="both",
+            expand=True,
+            pady=12
+        )
 
+        # Resultado de la predicción
         self.resultado = ttk.Label(
             contenedor,
-            text="La prediccion aparecera aqui",
+            text="La predicción aparecerá aquí",
             font=("Segoe UI", 15, "bold"),
             anchor="center",
             justify="center"
         )
         self.resultado.pack(pady=12)
 
+        # Detalle de probabilidades por categoría
         self.detalle = ttk.Label(
             contenedor,
             text="",
@@ -79,9 +95,13 @@ class AgroVisionApp:
         )
         self.detalle.pack(pady=8)
 
+        # Aviso sobre el alcance del sistema
         ttk.Label(
             contenedor,
-            text="Herramienta experimental; no reemplaza un diagnostico agronomico.",
+            text=(
+                "Herramienta experimental; no reemplaza "
+                "un diagnóstico agronómico."
+            ),
             wraplength=620,
             justify="center"
         ).pack(pady=(12, 0))
@@ -90,7 +110,7 @@ class AgroVisionApp:
         ruta = filedialog.askopenfilename(
             title="Seleccionar una hoja de tomate",
             filetypes=[
-                ("Imagenes", "*.jpg *.jpeg *.png"),
+                ("Imágenes", "*.jpg *.jpeg *.png"),
                 ("Todos los archivos", "*.*")
             ]
         )
@@ -98,9 +118,12 @@ class AgroVisionApp:
         if not ruta:
             return
 
+        # Abrir y preparar la imagen
         try:
             with Image.open(ruta) as original:
                 imagen = original.convert("RGB")
+
+                # Crear una copia para mostrar en la interfaz
                 vista = imagen.copy()
                 vista.thumbnail((420, 300))
 
@@ -110,8 +133,14 @@ class AgroVisionApp:
                     text=""
                 )
 
+                # Preparar la imagen para el modelo
                 imagen_modelo = imagen.resize(TAMANO_IMAGEN)
-                arreglo = np.asarray(imagen_modelo, dtype=np.float32)
+
+                arreglo = np.asarray(
+                    imagen_modelo,
+                    dtype=np.float32
+                )
+
                 lote = np.expand_dims(arreglo, axis=0)
 
         except (OSError, UnidentifiedImageError) as error:
@@ -121,49 +150,75 @@ class AgroVisionApp:
             )
             return
 
+        # Cargar el modelo y realizar la predicción
         try:
             if self.modelo is None:
                 if not RUTA_MODELO.is_file():
                     raise FileNotFoundError(
-                        f"No se encontro el modelo:\n{RUTA_MODELO}"
+                        "No se encontró el modelo entrenado:\n"
+                        f"{RUTA_MODELO}\n\n"
+                        "Verifica que el archivo "
+                        "'mobilenetv2_tomate.keras' esté "
+                        "dentro de la carpeta 'modelos'."
                     )
 
                 self.resultado.configure(
                     text="Cargando modelo..."
                 )
+                self.detalle.configure(text="")
                 self.root.update_idletasks()
-                self.modelo = tf.keras.models.load_model(RUTA_MODELO)
 
-            probabilidades = self.modelo.predict(lote, verbose=0)[0]
+                self.modelo = tf.keras.models.load_model(
+                    RUTA_MODELO
+                )
+
+            probabilidades = self.modelo.predict(
+                lote,
+                verbose=0
+            )[0]
 
             if len(probabilidades) != len(CLASES):
                 raise ValueError(
-                    "El modelo no devuelve las tres categorias esperadas."
+                    "El modelo no devuelve las tres categorías "
+                    "esperadas. Verifica las clases del entrenamiento."
                 )
 
+            # Obtener la clase con mayor probabilidad
             indice = int(np.argmax(probabilidades))
-            nombre = NOMBRES[CLASES[indice]]
+            clase_predicha = CLASES[indice]
+            nombre = NOMBRES[clase_predicha]
             confianza = float(probabilidades[indice]) * 100
 
             self.resultado.configure(
-                text=f"Prediccion: {nombre}\n"
-                     f"Probabilidad estimada: {confianza:.2f}%"
+                text=(
+                    f"Predicción: {nombre}\n"
+                    f"Probabilidad estimada: {confianza:.2f}%"
+                )
             )
 
-            lineas = ["Resultados por categoria:"]
+            # Mostrar las probabilidades de todas las clases
+            lineas = ["Resultados por categoría:"]
+
             for clase, valor in zip(CLASES, probabilidades):
                 lineas.append(
-                    f"• {NOMBRES[clase]}: {float(valor) * 100:.2f}%"
+                    f"• {NOMBRES[clase]}: "
+                    f"{float(valor) * 100:.2f}%"
                 )
 
-            self.detalle.configure(text="\n".join(lineas))
+            self.detalle.configure(
+                text="\n".join(lineas)
+            )
 
         except Exception as error:
             messagebox.showerror(
-                "Error de prediccion",
-                f"No fue posible generar la prediccion.\n{error}"
+                "Error de predicción",
+                "No fue posible generar la predicción.\n\n"
+                f"Detalle: {error}"
             )
-            self.resultado.configure(text="No se pudo generar la prediccion")
+
+            self.resultado.configure(
+                text="No se pudo generar la predicción"
+            )
             self.detalle.configure(text="")
 
 
