@@ -4,27 +4,25 @@ Sistema de clasificación de enfermedades en hojas de tomate mediante Deep Learn
 
 1. Descripción del proyecto
 
-AgroVision_AI es un proyecto académico individual que busca clasificar imágenes de hojas de tomate para identificar dos tipos de enfermedades y distinguir las hojas sanas. Se implementaron y evaluaron dos enfoques de aprendizaje profundo: una red neuronal convolucional (CNN) y MobileNetV2 mediante transferencia de aprendizaje.
+AgroVision_AI es un proyecto académico individual que utiliza modelos de aprendizaje profundo para clasificar imágenes de hojas de tomate en tres categorías: tizón temprano, tizón tardío y hojas sanas.
 
-2. Planteamiento del problema
+Se entrenaron y evaluaron dos modelos: una red neuronal convolucional (CNN) y MobileNetV2 mediante transferencia de aprendizaje.
 
-Las enfermedades de los cultivos de tomate pueden afectar su productividad y calidad. La identificación de síntomas a partir de imágenes puede apoyar la detección temprana y la toma de decisiones agrícolas. Este proyecto explora el uso de modelos de Deep Learning para automatizar esa clasificación.
+2. Problema y objetivo
 
-3. Objetivo general
+Las enfermedades pueden afectar la productividad de los cultivos de tomate. Este proyecto explora la clasificación automática de imágenes como apoyo a la identificación de síntomas.
 
-Desarrollar y evaluar modelos de Deep Learning capaces de clasificar imágenes de hojas de tomate en tres categorías.
+Objetivo general: desarrollar y comparar dos modelos de Deep Learning para clasificar hojas de tomate en tres categorías.
 
-4. Datos utilizados
+3. Conjunto de datos
 
-El conjunto de datos utilizado en el experimento contiene 1.495 imágenes, distribuidas en tres categorías:
+El experimento utilizó 1.495 imágenes distribuidas en tres clases:
 
 Tomato___Early_blight: tizón temprano.
 
 Tomato___Late_blight: tizón tardío.
 
 Tomato___healthy: hojas sanas.
-
-Distribución registrada:
 
 Conjunto
 
@@ -46,11 +44,11 @@ Total
 
 1.495
 
-Los datos se dividieron con una semilla de 42 para facilitar la reproducibilidad.
+La división se realizó con semilla 42. Las imágenes originales y los conjuntos divididos se conservan localmente y no están incluidos en este repositorio.
 
-5. Modelos y resultados
+4. Modelos y resultados
 
-Se evaluaron dos modelos sobre el conjunto de prueba:
+Ambos modelos se evaluaron sobre el mismo conjunto de prueba.
 
 Modelo
 
@@ -70,45 +68,74 @@ MobileNetV2
 
 0,2107
 
-En el experimento realizado, MobileNetV2 obtuvo la mayor exactitud. Estos resultados corresponden al conjunto de prueba utilizado y no garantizan el mismo rendimiento con imágenes externas.
+MobileNetV2 obtuvo una exactitud superior en este experimento. Estos resultados corresponden al conjunto evaluado y no garantizan el mismo rendimiento con imágenes externas.
 
-6. Tecnologías utilizadas
+5. Estructura del repositorio
 
-Python.
+descargar_datos.py: descarga o preparación de datos.
 
-TensorFlow y Keras.
+verificar_datos.py: verifica las categorías disponibles.
 
-NumPy y scikit-learn.
+dividir_datos.py: divide los datos en entrenamiento, validación y prueba.
 
-Matplotlib.
+entrenar_modelo.py: entrena la CNN básica.
 
-Procesamiento y clasificación de imágenes.
+entrenar_mobilenet.py: entrena MobileNetV2.
 
-Git y GitHub.
+predecir_imagen.py: realiza predicciones sobre imágenes.
 
-7. Estructura del proyecto
+interfaz_agrovision.py: contiene la interfaz del sistema.
 
-src/: scripts de preparación, entrenamiento, evaluación, predicción e interfaz.
+generar_comparacion.py: compara los resultados de los modelos.
 
-data/: imágenes originales.
+generar_evidencias.py: genera archivos de evidencia.
 
-data_divididos/: conjuntos de entrenamiento, validación y prueba.
-
-modelos/: modelos entrenados.
+modelos/: modelos entrenados publicados.
 
 resultados/: métricas y gráficas de la CNN.
 
 resultados_mobilenet/: métricas y gráficas de MobileNetV2.
 
-evidencias/: comparación de modelos e informe de evidencias.
+evidencias/: informe, comparación y evidencias adicionales.
 
-Los datos, modelos y resultados se encuentran en el entorno local de desarrollo; su disponibilidad en GitHub depende de los archivos que se publiquen en el repositorio.
+requirements.txt: dependencias de Python.
 
-8. Estado del proyecto
+6. Tecnologías
 
-Se completaron la preparación y división de los datos, el entrenamiento de la CNN y MobileNetV2, la evaluación sobre el conjunto de prueba y la generación de archivos de comparación y evidencias.
+Python
 
-La siguiente etapa consiste en verificar la predicción con imágenes nuevas, revisar la interfaz y organizar los entregables para la presentación académica.
+TensorFlow y Keras
+
+NumPy y pandas
+
+scikit-learn
+
+Matplotlib
+
+Pillow
+
+GitHub
+
+7. Instalación y ejecución
+
+Se recomienda utilizar una versión de Python compatible con las dependencias declaradas en requirements.txt.
+
+Crear y activar un entorno virtual:
+
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+Instalar las dependencias:
+
+python -m pip install -r requirements.txt
+
+Importante: antes de ejecutar los scripts de entrenamiento o predicción, verifica que los datos estén en las rutas esperadas por cada script y que los modelos entrenados se encuentren en modelos/.
+
+Los comandos concretos para cada script pueden depender de los argumentos y las rutas definidos en su código.
+
+8. Alcance y limitaciones
+
+Este es un proyecto académico experimental. La clasificación se limita a las tres categorías estudiadas. El modelo puede equivocarse con imágenes externas, condiciones de iluminación diferentes u hojas con síntomas no representados en el conjunto de datos. No sustituye la evaluación de un especialista agrícola.
 
 9. Autor
 
