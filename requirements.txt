@@ -1,4 +1,4 @@
-Dependencias principales de AgroVision_AI
+# Dependencias principales de AgroVision_AI
 
 tensorflow==2.21.0
 keras==3.15.1
